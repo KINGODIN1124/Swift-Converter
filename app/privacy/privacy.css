@@ -1,0 +1,65 @@
+.privacy-page {
+  padding: 6rem 0;
+  text-align: center;
+}
+
+.privacy-hero {
+  margin-bottom: 4rem;
+}
+
+.privacy-hero h1 {
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  margin-bottom: 1rem;
+}
+
+.privacy-hero .subtitle {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+}
+
+.main-card {
+  padding: 4rem;
+  text-align: left;
+  max-width: 900px;
+  margin: 0 auto;
+  border: 1px solid var(--border);
+}
+
+.main-card h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: var(--text-main);
+}
+
+.intro-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-main);
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.policy-section {
+  margin-bottom: 3rem;
+}
+
+.policy-section h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--text-main);
+}
+
+.policy-section p {
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.policy-footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}

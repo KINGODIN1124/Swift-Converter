@@ -1,0 +1,89 @@
+.about-page {
+  padding: 6rem 0;
+  text-align: center;
+}
+
+.about-hero {
+  margin-bottom: 4rem;
+}
+
+.about-hero h1 {
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  margin-bottom: 1rem;
+}
+
+.about-hero .subtitle {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+}
+
+.main-card {
+  padding: 4rem;
+  text-align: left;
+  max-width: 900px;
+  margin: 0 auto;
+  border: 1px solid var(--border);
+}
+
+.main-card h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: var(--text-main);
+}
+
+.main-card p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-bottom: 3rem;
+}
+
+.features-highlight {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.highlight-item {
+  text-align: center;
+  padding: 2rem;
+  background: var(--bg-surface);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+}
+
+.highlight-item .icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.highlight-item h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-main);
+}
+
+.highlight-item p {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 0px;
+}
+
+.tech-stack-info {
+    text-align: center;
+    border-top: 1px solid var(--border);
+    padding-top: 3rem;
+}
+
+.tech-stack-info h3 {
+    margin-bottom: 1rem;
+    color: var(--text-main);
+}
+
+@media (max-width: 768px) {
+  .features-highlight {
+    grid-template-columns: 1fr;
+  }
+}
