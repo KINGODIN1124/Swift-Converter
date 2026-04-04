@@ -1,15 +1,8 @@
 'use client';
-import { useState, useEffect } from 'react';
-import * as pdfjs from 'pdfjs-dist';
-import { jsPDF } from 'jspdf';
+import { useState, useEffect, useRef } from 'react';
 import DropZone from '@/components/DropZone';
 import '../image-compressor/tool.css';
 import './translator.css';
-
-// Initialize PDF.js worker
-if (typeof window !== 'undefined' && !pdfjs.GlobalWorkerOptions.workerSrc) {
-  pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
-}
 
 export default function PDFTranslator() {
   const [file, setFile] = useState(null);
@@ -17,6 +10,25 @@ export default function PDFTranslator() {
   const [processing, setProcessing] = useState(false);
   const [translatedPdf, setTranslatedPdf] = useState(null);
   const [progress, setProgress] = useState('');
+  
+  const pdfjsRef = useRef(null);
+  const jsPDFRef = useRef(null);
+
+  useEffect(() => {
+    // Dynamically load libraries only in the browser
+    const loadLibs = async () => {
+      const pdfjs = await import('pdfjs-dist');
+      const { jsPDF } = await import('jspdf');
+      
+      pdfjsRef.current = pdfjs;
+      jsPDFRef.current = jsPDF;
+
+      if (!pdfjs.GlobalWorkerOptions.workerSrc) {
+        pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+      }
+    };
+    loadLibs();
+  }, []);
 
   const languages = [
     { code: 'hi', name: 'Hindi' },
@@ -48,11 +60,13 @@ export default function PDFTranslator() {
   };
 
   const handleTranslate = async () => {
-    if (!file) return;
+    if (!file || !pdfjsRef.current || !jsPDFRef.current) return;
     setProcessing(true);
     setProgress('Extracting text from PDF...');
 
     try {
+      const pdfjs = pdfjsRef.current;
+      const jsPDF = jsPDFRef.current;
       const arrayBuffer = await file.arrayBuffer();
       const pdf = await pdfjs.getDocument({ data: arrayBuffer }).promise;
       let fullText = '';
