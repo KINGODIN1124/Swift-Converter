@@ -20,9 +20,9 @@ export default function Footer() {
         <div className="footer-links-grid">
           <div className="footer-col">
             <h4>Product</h4>
-            <Link href="/pdf-tools">PDF Tools</Link>
-            <Link href="/image-tools">Image Tools</Link>
-            <Link href="/video-tools">Video Tools</Link>
+            <Link href="/#tools?category=pdf">PDF Tools</Link>
+            <Link href="/#tools?category=image">Image Tools</Link>
+            <Link href="/#tools?category=video">Video Tools</Link>
           </div>
           
           <div className="footer-col">

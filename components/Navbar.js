@@ -17,7 +17,7 @@ export default function Navbar() {
         </div>
 
         <div className="nav-actions">
-          <a href="#tools" className="btn-primary">Get Started</a>
+          <Link href="/#tools" className="btn-primary">Get Started</Link>
         </div>
       </div>
     </nav>
