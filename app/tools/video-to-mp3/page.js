@@ -1,7 +1,5 @@
 'use client';
-import { useState, useRef } from 'react';
-import { FFmpeg } from '@ffmpeg/ffmpeg';
-import { fetchFile, toBlobURL } from '@ffmpeg/util';
+import { useState, useRef, useEffect } from 'react';
 import DropZone from '@/components/DropZone';
 import '../image-compressor/tool.css';
 
@@ -11,21 +9,47 @@ export default function VideoToMP3() {
   const [loaded, setLoaded] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
-  const ffmpegRef = useRef(new FFmpeg());
+  
+  const ffmpegRef = useRef(null);
+  const ffmpegUtilsRef = useRef(null);
+
+  useEffect(() => {
+    // Dynamically load FFmpeg only in the browser
+    const loadLibs = async () => {
+      try {
+        const { FFmpeg } = await import('@ffmpeg/ffmpeg');
+        const utils = await import('@ffmpeg/util');
+        
+        ffmpegRef.current = new FFmpeg();
+        ffmpegUtilsRef.current = utils;
+      } catch (err) {
+        console.error("FFmpeg library load failed:", err);
+      }
+    };
+    loadLibs();
+  }, []);
 
   const loadFFmpeg = async () => {
+    if (!ffmpegRef.current || !ffmpegUtilsRef.current) return;
+    
     const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd';
     const ffmpeg = ffmpegRef.current;
+    const { toBlobURL } = ffmpegUtilsRef.current;
     
     ffmpeg.on('progress', ({ progress }) => {
       setProgress(Math.round(progress * 100));
     });
 
-    await ffmpeg.load({
-      coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
-      wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
-    });
-    setLoaded(true);
+    try {
+      await ffmpeg.load({
+        coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
+        wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
+      });
+      setLoaded(true);
+    } catch (err) {
+      console.error("FFmpeg load failed:", err);
+      alert("Failed to initialize video converter.");
+    }
   };
 
   const handleFileSelect = (selectedFile) => {
@@ -35,11 +59,12 @@ export default function VideoToMP3() {
   };
 
   const convertToMP3 = async () => {
-    if (!file || !loaded) return;
+    if (!file || !loaded || !ffmpegRef.current || !ffmpegUtilsRef.current) return;
     setProcessing(true);
     setProgress(0);
     
     const ffmpeg = ffmpegRef.current;
+    const { fetchFile } = ffmpegUtilsRef.current;
     try {
       await ffmpeg.writeFile('input_video', await fetchFile(file));
       await ffmpeg.exec(['-i', 'input_video', '-vn', '-acodec', 'libmp3lame', '-q:a', '2', 'output.mp3']);

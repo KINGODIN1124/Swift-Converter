@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import mammoth from 'mammoth';
-import html2pdf from 'html2pdf.js';
 import DropZone from '@/components/DropZone';
 import '../image-compressor/tool.css';
 
@@ -20,6 +19,7 @@ export default function WordToPDF() {
     setProcessing(true);
     
     try {
+      const html2pdf = (await import('html2pdf.js')).default;
       const arrayBuffer = await file.arrayBuffer();
       const result = await mammoth.convertToHtml({ arrayBuffer });
       const html = result.value;
