@@ -8,6 +8,7 @@ import { usePlatform } from '@/hooks/usePlatform';
 function HomeContent() {
   const searchParams = useSearchParams();
   const categoryFilter = searchParams.get('category');
+  const [searchTerm, setSearchTerm] = useState('');
   const { isNative } = usePlatform();
 
   const tools = useMemo(() => [
@@ -67,9 +68,26 @@ function HomeContent() {
   ], []);
 
   const filteredTools = useMemo(() => {
-    if (!categoryFilter) return tools;
-    return tools.filter(tool => tool.category === categoryFilter);
-  }, [tools, categoryFilter]);
+    let result = tools;
+    if (categoryFilter) {
+      result = result.filter(tool => tool.category === categoryFilter);
+    }
+    if (searchTerm) {
+      const lower = searchTerm.toLowerCase();
+      result = result.filter(tool => 
+        tool.title.toLowerCase().includes(lower) || 
+        tool.description.toLowerCase().includes(lower)
+      );
+    }
+    return result;
+  }, [tools, categoryFilter, searchTerm]);
+
+  const categoryChips = [
+    { label: 'All', value: null },
+    { label: 'PDF', value: 'pdf' },
+    { label: 'Image', value: 'image' },
+    { label: 'Video', value: 'video' }
+  ];
 
   return (
     <div className="home-page animate-fade-in">
@@ -94,10 +112,29 @@ function HomeContent() {
           </div>
         </section>
       ) : (
-        <header className="mobile-header" style={{ padding: '2rem 0', textAlign: 'center' }}>
+        <header className="mobile-header">
            <div className="container">
-             <h1 className="gradient-text" style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>SwiftConvert</h1>
-             <p style={{ color: 'var(--text-muted)' }}>Professional File Suite</p>
+             <h1 className="gradient-text">SwiftConvert</h1>
+             <div className="mobile-search-bar">
+               <span className="search-icon">🔍</span>
+               <input 
+                 type="text" 
+                 placeholder="Search tools..." 
+                 value={searchTerm}
+                 onChange={(e) => setSearchTerm(e.target.value)}
+                />
+             </div>
+             <div className="category-chips">
+                {categoryChips.map(chip => (
+                  <a 
+                    key={chip.label} 
+                    href={chip.value ? `/#tools?category=${chip.value}` : '/#tools'} 
+                    className={`chip ${categoryFilter === chip.value ? 'active' : ''}`}
+                  >
+                    {chip.label}
+                  </a>
+                ))}
+             </div>
            </div>
         </header>
       )}
@@ -112,13 +149,19 @@ function HomeContent() {
                 <>Our Core <span className="gradient-text">Tools</span></>
               )}
             </h2>
-            <p>No registration required.</p>
           </div>
           
           <div className="tools-grid">
-            {filteredTools.map((tool, index) => (
-              <ToolCard key={index} {...tool} />
-            ))}
+            {filteredTools.length > 0 ? (
+              filteredTools.map((tool, index) => (
+                <ToolCard key={index} {...tool} />
+              ))
+            ) : (
+              <div className="no-results glass-card">
+                <p>No tools found for "{searchTerm}"</p>
+                <button className="btn-secondary" onClick={() => setSearchTerm('')}>Clear Search</button>
+              </div>
+            )}
           </div>
 
           {categoryFilter && (
@@ -128,6 +171,21 @@ function HomeContent() {
           )}
         </div>
       </section>
+
+      {isNative && (
+        <section className="mobile-support-links">
+           <div className="container">
+             <h3>Quick Links</h3>
+             <div className="support-grid">
+               <Link href="/about">About Us</Link>
+               <Link href="/faq">FAQ</Link>
+               <Link href="/privacy">Privacy Policy</Link>
+               <Link href="/terms">Terms of Service</Link>
+               <Link href="/contact">Contact Support</Link>
+             </div>
+           </div>
+        </section>
+      )}
 
       {!isNative && (
         <section id="features" className="features-section">

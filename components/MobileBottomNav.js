@@ -10,7 +10,7 @@ export default function MobileBottomNav() {
     { label: 'Home', icon: '🏠', href: '/' },
     { label: 'PDF', icon: '📄', href: '/#tools?category=pdf' },
     { label: 'Image', icon: '🖼️', href: '/#tools?category=image' },
-    { label: 'Video', icon: '🎥', href: '/#tools?category=video' }
+    { label: 'Support', icon: '⚙️', href: '/faq' }
   ];
 
   return (
