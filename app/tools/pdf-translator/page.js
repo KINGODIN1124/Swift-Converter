@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import DropZone from '@/components/DropZone';
 import '../image-compressor/tool.css';
 import './translator.css';
+import { CONFIG } from '@/lib/config';
 
 export default function PDFTranslator() {
   const [file, setFile] = useState(null);
@@ -46,7 +47,7 @@ export default function PDFTranslator() {
 
   const translateText = async (text, to) => {
     try {
-      const response = await fetch('/api/translate', {
+      const response = await fetch(`${CONFIG.API_BASE_URL}/api/translate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text, to })

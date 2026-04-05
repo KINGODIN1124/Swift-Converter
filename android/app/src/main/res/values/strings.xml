@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">SwiftConvert</string>
+    <string name="title_activity_main">SwiftConvert</string>
+    <string name="package_name">com.swiftconvert.app</string>
+    <string name="custom_url_scheme">com.swiftconvert.app</string>
+</resources>

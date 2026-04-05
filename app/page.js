@@ -3,10 +3,12 @@ import { useSearchParams } from 'next/navigation';
 import { useState, useMemo, Suspense } from 'react';
 import ToolCard from '@/components/ToolCard';
 import './app.css';
+import { usePlatform } from '@/hooks/usePlatform';
 
 function HomeContent() {
   const searchParams = useSearchParams();
   const categoryFilter = searchParams.get('category');
+  const { isNative } = usePlatform();
 
   const tools = useMemo(() => [
     {
@@ -71,25 +73,34 @@ function HomeContent() {
 
   return (
     <div className="home-page animate-fade-in">
-      <section className="hero">
-        <div className="container">
-          <div className="hero-content">
-            <span className="badge">100% Private • Browser-Based</span>
-            <h1 className="hero-title">
-              The <span className="gradient-text">Fastest</span> way to <br />
-              Transform your files.
-            </h1>
-            <p className="hero-subtitle">
-              Convert, merge, and compress your files locally. No uploads, no waiting, 
-              and total privacy for your sensitive documents.
-            </p>
-            <div className="hero-actions">
-              <a href="#tools" className="btn-primary">Explore All Tools</a>
-              <a href="#features" className="btn-secondary">How it works</a>
+      {!isNative ? (
+        <section className="hero">
+          <div className="container">
+            <div className="hero-content">
+              <span className="badge">100% Private • Browser-Based</span>
+              <h1 className="hero-title">
+                The <span className="gradient-text">Fastest</span> way to <br />
+                Transform your files.
+              </h1>
+              <p className="hero-subtitle">
+                Convert, merge, and compress your files locally. No uploads, no waiting, 
+                and total privacy for your sensitive documents.
+              </p>
+              <div className="hero-actions">
+                <a href="#tools" className="btn-primary">Explore All Tools</a>
+                <a href="#features" className="btn-secondary">How it works</a>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : (
+        <header className="mobile-header" style={{ padding: '2rem 0', textAlign: 'center' }}>
+           <div className="container">
+             <h1 className="gradient-text" style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>SwiftConvert</h1>
+             <p style={{ color: 'var(--text-muted)' }}>Professional File Suite</p>
+           </div>
+        </header>
+      )}
 
       <section id="tools" className="tools-section">
         <div className="container">
@@ -101,7 +112,7 @@ function HomeContent() {
                 <>Our Core <span className="gradient-text">Tools</span></>
               )}
             </h2>
-            <p>Select a tool to get started. No registration required.</p>
+            <p>No registration required.</p>
           </div>
           
           <div className="tools-grid">
@@ -118,27 +129,29 @@ function HomeContent() {
         </div>
       </section>
 
-      <section id="features" className="features-section">
-        <div className="container">
-          <div className="features-grid">
-            <div className="feature">
-              <span className="feature-icon">🔒</span>
-              <h3>Privacy-First</h3>
-              <p>Your files never leave your computer. Processing happens entirely in your browser.</p>
-            </div>
-            <div className="feature">
-              <span className="feature-icon">⚡</span>
-              <h3>Blinking Speed</h3>
-              <p>Skip the upload/download queues. Get your processed files instantly.</p>
-            </div>
-            <div className="feature">
-              <span className="feature-icon">🆓</span>
-              <h3>Always Free</h3>
-              <p>Professional grade tools with no hidden costs or subscription traps.</p>
+      {!isNative && (
+        <section id="features" className="features-section">
+          <div className="container">
+            <div className="features-grid">
+              <div className="feature">
+                <span className="feature-icon">🔒</span>
+                <h3>Privacy-First</h3>
+                <p>Your files never leave your computer. Processing happens entirely in your browser.</p>
+              </div>
+              <div className="feature">
+                <span className="feature-icon">⚡</span>
+                <h3>Blinking Speed</h3>
+                <p>Skip the upload/download queues. Get your processed files instantly.</p>
+              </div>
+              <div className="feature">
+                <span className="feature-icon">🆓</span>
+                <h3>Always Free</h3>
+                <p>Professional grade tools with no hidden costs or subscription traps.</p>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
     </div>
   );
 }
