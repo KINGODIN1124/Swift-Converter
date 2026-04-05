@@ -6,7 +6,7 @@ const config: CapacitorConfig = {
   webDir: 'out',
   plugins: {
     CapacitorUpdater: {
-      autoUpdate: true,
+      autoUpdate: false,
       statsUrl: 'https://capgo.app/api/stats/',
     },
   },
