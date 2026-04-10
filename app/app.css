@@ -189,23 +189,44 @@
 }
 
 .chip {
-  padding: 6px 16px;
-  background: #111111;
+  padding: 8px 18px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--border);
-  border-radius: 99px;
   color: var(--text-muted);
-  text-decoration: none;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-weight: 700;
   white-space: nowrap;
-  transition: all 0.2s var(--transition-fast);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.chip:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--secondary);
+  color: #fff;
 }
 
 .chip.active {
-  background: #ffffff;
-  color: #000000;
-  border-color: #ffffff;
-  transform: scale(1.05);
+  background: var(--secondary);
+  color: #000;
+  border-color: var(--secondary);
+  box-shadow: 0 0 15px rgba(0, 255, 242, 0.3);
+}
+
+.desktop-nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.desktop-nav-header .section-header {
+  margin-bottom: 0;
 }
 
 .no-results {

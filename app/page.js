@@ -184,20 +184,25 @@ function HomeContent() {
                <span className="search-icon">🔍</span>
                <input 
                  type="text" 
-                 placeholder="Search tools..." 
+                 placeholder="Search all 16 tools..." 
                  value={searchTerm}
                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
              </div>
              <div className="category-chips">
                 {categoryChips.map(chip => (
-                  <a 
+                  <button 
                     key={chip.label} 
-                    href={chip.value ? `/#tools?category=${chip.value}` : '/#tools'} 
+                    onClick={() => {
+                      const url = chip.value ? `/?category=${chip.value}#tools` : '/';
+                      window.history.pushState({}, '', url);
+                      // Force search params update manually for response
+                      window.dispatchEvent(new Event('popstate'));
+                    }}
                     className={`chip ${categoryFilter === chip.value ? 'active' : ''}`}
                   >
                     {chip.label}
-                  </a>
+                  </button>
                 ))}
              </div>
            </div>
@@ -207,14 +212,31 @@ function HomeContent() {
       <section id="tools" className="tools-section">
         <div className="container">
           {!isNative && (
-            <div className="section-header">
-              <h2>
-                {categoryFilter ? (
-                  <>Filtered <span className="gradient-text">{categoryFilter.toUpperCase()}</span> Tools</>
-                ) : (
-                  <>Our Core <span className="gradient-text">Tools</span></>
-                )}
-              </h2>
+            <div className="desktop-nav-header">
+               <div className="section-header">
+                  <h2>
+                    {categoryFilter ? (
+                      <>Filtered <span className="gradient-text">{categoryFilter.toUpperCase()}</span> Tools</>
+                    ) : (
+                      <>Our Core <span className="gradient-text">Tools</span></>
+                    )}
+                  </h2>
+               </div>
+               <div className="category-chips">
+                  {categoryChips.map(chip => (
+                    <button 
+                      key={chip.label} 
+                      onClick={() => {
+                         const url = chip.value ? `/?category=${chip.value}#tools` : '/';
+                         window.history.pushState({}, '', url);
+                         window.dispatchEvent(new Event('popstate'));
+                      }}
+                      className={`chip ${categoryFilter === chip.value ? 'active' : ''}`}
+                    >
+                      {chip.label}
+                    </button>
+                  ))}
+               </div>
             </div>
           )}
           

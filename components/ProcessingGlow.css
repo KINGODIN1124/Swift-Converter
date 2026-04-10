@@ -1,0 +1,51 @@
+.processing-glow-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  width: 100%;
+}
+
+.glow-orb {
+  width: 80px;
+  height: 80px;
+  position: relative;
+}
+
+.pulse-ring {
+  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  transform-origin: center;
+}
+
+.inner-glow {
+  animation: inner-glow 2s ease-in-out infinite;
+  filter: blur(8px);
+  opacity: 0.6;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { opacity: 0.3; }
+  100% { transform: scale(1.3); opacity: 0; }
+}
+
+@keyframes inner-glow {
+  0%, 100% { transform: scale(1); opacity: 0.4; filter: blur(8px); }
+  50% { transform: scale(1.1); opacity: 0.8; filter: blur(12px); }
+}
+
+.glow-label {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  animation: text-breathe 2s ease-in-out infinite;
+}
+
+@keyframes text-breathe {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
