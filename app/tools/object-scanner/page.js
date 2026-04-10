@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import SharingLink from '@/components/SharingLink';
+import DropZone from '@/components/DropZone';
 import '../image-compressor/tool.css';
 
 export default function ObjectScanner() {

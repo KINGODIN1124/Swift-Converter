@@ -1,5 +1,16 @@
 'use client';
 import { useState, useRef } from 'react';
+import SharingLink from '@/components/SharingLink';
+import DropZone from '@/components/DropZone';
+import '../image-compressor/tool.css';
+import './html-to-pdf.css';
+
+export default function HTMLToPDF() {
+  const [html, setHtml] = useState('<h1>Hello SwiftConvert!</h1>\n<p>Start typing your HTML code here to see a live preview and convert it to a PDF.</p>');
+  const [pdfBlob, setPdfBlob] = useState(null);
+  const [processing, setProcessing] = useState(false);
+  const previewRef = useRef(null);
+
   const handleConvert = async () => {
     if (!html) return;
     setProcessing(true);
