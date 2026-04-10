@@ -1,5 +1,6 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import { useState, useMemo, Suspense } from 'react';
 import ToolCard from '@/components/ToolCard';
 import './app.css';
@@ -14,53 +15,114 @@ function HomeContent() {
   const tools = useMemo(() => [
     {
       title: "PDF Translator",
-      description: "Instantly translate entire PDF files to Hindi, Arabic, Japanese, and more.",
+      description: "Instantly translate entire PDF files to 50+ languages.",
       icon: "🌐",
       href: "/tools/pdf-translator",
-      tag: "New",
+      tag: "Pro",
       category: "pdf"
     },
     {
+      title: "AI Background Eraser",
+      description: "Remove image backgrounds instantly using local AI.",
+      icon: "🪄",
+      href: "/tools/background-eraser",
+      tag: "New",
+      category: "ai"
+    },
+    {
+      title: "Cloud Share",
+      description: "Get a temporary sharing URL for any media file.",
+      icon: "☁️",
+      href: "/tools/cloud-share",
+      category: "social"
+    },
+    {
       title: "Image Compressor",
-      description: "Reduce image file size with zero quality loss. Works offline in your browser.",
+      description: "Reduce image file size with zero quality loss.",
       icon: "🖼️",
       href: "/tools/image-compressor",
-      tag: "Popular",
+      category: "image"
+    },
+    {
+      title: "Object Scanner",
+      description: "Extract editable text from any photo using OCR.",
+      icon: "🔍",
+      href: "/tools/object-scanner",
+      category: "ai"
+    },
+    {
+      title: "PDF Splitter",
+      description: "Extract specific pages from any PDF document.",
+      icon: "✂️",
+      href: "/tools/pdf-split",
+      category: "pdf"
+    },
+    {
+      title: "HTML to PDF",
+      description: "Turn web code or snippets into professional PDFs.",
+      icon: "📄",
+      href: "/tools/html-to-pdf",
+      category: "dev"
+    },
+    {
+      title: "Code Prettifier",
+      description: "Format JSON, JS, HTML, and CSS instantly.",
+      icon: "💻",
+      href: "/tools/code-prettifier",
+      category: "dev"
+    },
+    {
+      title: "GIF Master",
+      description: "Create high-quality GIFs from your video files.",
+      icon: "🎞️",
+      href: "/tools/video-to-gif",
+      category: "video"
+    },
+    {
+      title: "Audio Snipper",
+      description: "Cut and trim MP3s with precision.",
+      icon: "🎵",
+      href: "/tools/audio-trim",
+      category: "video"
+    },
+    {
+      title: "Meme Generator",
+      description: "Add captions to your photos locally and privately.",
+      icon: "🤡",
+      href: "/tools/meme-generator",
       category: "image"
     },
     {
       title: "PDF Merger",
-      description: "Combine multiple PDF files into a single document effortlessly and securely.",
-      icon: "📄",
+      description: "Combine multiple PDF files into a single document.",
+      icon: "📑",
       href: "/tools/pdf-merge",
-      tag: "Free",
       category: "pdf"
     },
     {
       title: "Video to MP3",
-      description: "Extract high-quality audio from any video file in seconds.",
-      icon: "🎵",
+      description: "Extract high-quality audio from any video file.",
+      icon: "🎧",
       href: "/tools/video-to-mp3",
-      tag: "Quick",
       category: "video"
     },
     {
       title: "Image Converter",
-      description: "Convert between JPG, PNG, WebP, and more with a single click.",
+      description: "Convert between JPG, PNG, and WebP instantly.",
       icon: "🔄",
       href: "/tools/image-converter",
       category: "image"
     },
     {
       title: "Word to PDF",
-      description: "Convert Microsoft Word documents to professional PDF files instantly.",
-      icon: "📑",
+      description: "Convert Word documents to PDF files instantly.",
+      icon: "📝",
       href: "/tools/word-to-pdf",
       category: "pdf"
     },
     {
       title: "Resize Image",
-      description: "Change image dimensions for social media, web, or print.",
+      description: "Change dimensions for social media or print.",
       icon: "📐",
       href: "/tools/image-resize",
       category: "image"
@@ -86,7 +148,10 @@ function HomeContent() {
     { label: 'All', value: null },
     { label: 'PDF', value: 'pdf' },
     { label: 'Image', value: 'image' },
-    { label: 'Video', value: 'video' }
+    { label: 'Video', value: 'video' },
+    { label: 'Dev', value: 'dev' },
+    { label: 'AI', value: 'ai' },
+    { label: 'Share', value: 'social' }
   ];
 
   return (
@@ -141,15 +206,17 @@ function HomeContent() {
 
       <section id="tools" className="tools-section">
         <div className="container">
-          <div className="section-header">
-            <h2>
-              {categoryFilter ? (
-                <>Filtered <span className="gradient-text">{categoryFilter.toUpperCase()}</span> Tools</>
-              ) : (
-                <>Our Core <span className="gradient-text">Tools</span></>
-              )}
-            </h2>
-          </div>
+          {!isNative && (
+            <div className="section-header">
+              <h2>
+                {categoryFilter ? (
+                  <>Filtered <span className="gradient-text">{categoryFilter.toUpperCase()}</span> Tools</>
+                ) : (
+                  <>Our Core <span className="gradient-text">Tools</span></>
+                )}
+              </h2>
+            </div>
+          )}
           
           <div className="tools-grid">
             {filteredTools.length > 0 ? (
@@ -163,28 +230,11 @@ function HomeContent() {
               </div>
             )}
           </div>
-
-          {categoryFilter && (
-            <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-              <a href="/#tools" className="btn-secondary">View All Tools</a>
-            </div>
-          )}
         </div>
       </section>
 
       {isNative && (
-        <section className="mobile-support-links">
-           <div className="container">
-             <h3>Quick Links</h3>
-             <div className="support-grid">
-               <Link href="/about">About Us</Link>
-               <Link href="/faq">FAQ</Link>
-               <Link href="/privacy">Privacy Policy</Link>
-               <Link href="/terms">Terms of Service</Link>
-               <Link href="/contact">Contact Support</Link>
-             </div>
-           </div>
-        </section>
+        <div style={{ height: '80px' }} />
       )}
 
       {!isNative && (

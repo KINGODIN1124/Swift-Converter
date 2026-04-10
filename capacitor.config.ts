@@ -10,10 +10,6 @@ const config: CapacitorConfig = {
       statsUrl: 'https://capgo.app/api/stats/',
     },
   },
-  server: {
-    androidScheme: 'http',
-    hostname: 'localhost'
-  }
 };
 
 export default config;

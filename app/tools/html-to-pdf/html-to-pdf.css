@@ -1,0 +1,89 @@
+.html-pdf-workspace {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.editor-section, .preview-section {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.label-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label-bar label, .preview-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.html-textarea {
+  width: 100%;
+  height: 300px;
+  background: black !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 12px !important;
+  padding: 1.25rem !important;
+  color: #00ff00 !important; /* Matrix Green for dev feel */
+  font-family: 'Fira Code', 'Courier New', monospace !important;
+  font-size: 0.95rem !important;
+  outline: none !important;
+  resize: vertical;
+  transition: all 0.3s ease;
+}
+
+.html-textarea:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 20px var(--primary-glow) !important;
+}
+
+.html-preview {
+  min-height: 200px;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  color: black;
+  overflow-y: auto;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+}
+
+.actions-section {
+  padding: 1.5rem;
+  position: sticky;
+  bottom: 80px;
+}
+
+.result-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.btn-sm {
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  border-radius: 8px;
+}
+
+@media (min-width: 992px) {
+  .html-pdf-workspace {
+     flex-direction: row;
+     flex-wrap: wrap;
+  }
+  .editor-section, .preview-section {
+    flex: 1;
+    min-width: 45%;
+  }
+  .actions-section {
+    width: 100%;
+  }
+}

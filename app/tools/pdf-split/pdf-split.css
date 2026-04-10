@@ -1,0 +1,98 @@
+.pdf-split-workspace {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.selected-file-card {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.file-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.file-icon {
+  font-size: 2.5rem;
+  background: var(--bg-surface);
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+}
+
+.text-info h3 {
+  font-size: 1.1rem;
+  margin: 0;
+  color: white;
+}
+
+.text-info p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.split-options-section {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  animation: slideIn 0.4s var(--transition-smooth);
+}
+
+.range-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.range-input-group label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.range-input {
+  background: black !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 12px !important;
+  padding: 14px 18px !important;
+  color: white !important;
+  font-size: 1.1rem !important;
+  outline: none !important;
+  transition: all 0.3s ease;
+}
+
+.range-input:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 20px var(--primary-glow) !important;
+}
+
+.result-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.result-actions .btn-primary {
+  width: 100%;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
