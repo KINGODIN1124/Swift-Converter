@@ -1,7 +1,5 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { createWorker } from 'tesseract.js';
-import DropZone from '@/components/DropZone';
 import SharingLink from '@/components/SharingLink';
 import '../image-compressor/tool.css';
 
@@ -24,6 +22,9 @@ export default function ObjectScanner() {
     setProgress(0);
     
     try {
+      // Lazy load tesseract to avoid SSR errors
+      const { createWorker } = await import('tesseract.js');
+      
       const worker = await createWorker('eng', 1, {
         logger: m => {
           if (m.status === 'recognizing text') {

@@ -1,22 +1,14 @@
 'use client';
 import { useState, useRef } from 'react';
-import html2pdf from 'html2pdf.js';
-import SharingLink from '@/components/SharingLink';
-import '../image-compressor/tool.css';
-import './html-to-pdf.css';
-
-export default function HTMLToPDF() {
-  const [html, setHtml] = useState('<h1>Hello SwiftConvert!</h1>\n<p>Start typing your HTML code here to see a live preview and convert it to a PDF.</p>');
-  const [pdfBlob, setPdfBlob] = useState(null);
-  const [processing, setProcessing] = useState(false);
-  const previewRef = useRef(null);
-
   const handleConvert = async () => {
     if (!html) return;
     setProcessing(true);
     setPdfBlob(null);
 
     try {
+      // Lazy load html2pdf to avoid SSR errors
+      const html2pdf = (await import('html2pdf.js')).default;
+      
       const opt = {
         margin: 10,
         filename: 'document.pdf',

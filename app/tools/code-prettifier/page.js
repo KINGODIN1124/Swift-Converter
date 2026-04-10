@@ -1,10 +1,5 @@
 'use client';
 import { useState } from 'react';
-import prettier from 'prettier/standalone';
-import babel from 'prettier/plugins/babel';
-import estree from 'prettier/plugins/estree';
-import html from 'prettier/plugins/html';
-import postcss from 'prettier/plugins/postcss';
 import SharingLink from '@/components/SharingLink';
 import '../image-compressor/tool.css';
 import '../html-to-pdf/html-to-pdf.css';
@@ -28,6 +23,13 @@ export default function CodePrettifier() {
     setFormattedCode('');
 
     try {
+      // Lazy load prettier for SSR safety
+      const prettier = (await import('prettier/standalone')).default;
+      const babel = (await import('prettier/plugins/babel')).default;
+      const estree = (await import('prettier/plugins/estree')).default;
+      const html = (await import('prettier/plugins/html')).default;
+      const postcss = (await import('prettier/plugins/postcss')).default;
+
       const selectedLang = languages.find(l => l.value === language);
       const formatted = await prettier.format(code, {
         parser: selectedLang.parser,
